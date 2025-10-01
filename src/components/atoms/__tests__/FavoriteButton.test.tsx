@@ -45,7 +45,6 @@ const renderWithProviders = (component: React.ReactElement) => {
 
 describe('FavoriteButton', () => {
   beforeEach(() => {
-    // Clear localStorage before each test
     localStorage.clear();
   });
 
