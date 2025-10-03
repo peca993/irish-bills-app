@@ -13,12 +13,8 @@ const mockBill: Bill = {
         showAs: 'Test Sponsor',
       },
     },
-    titles: {
-      title: [
-        { lang: 'en', value: 'Test Bill Title' },
-        { lang: 'ga', value: 'Teideal Tástála' },
-      ],
-    },
+    shortTitleEn: 'Test Bill Title',
+    shortTitleGa: 'Teideal Tástála',
     uri: 'test-uri',
   },
 };
@@ -40,7 +36,10 @@ describe('billUtils', () => {
         ...mockBill,
         bill: {
           ...mockBill.bill,
-          titles: { title: [] },
+          shortTitleEn: undefined,
+          shortTitleGa: undefined,
+          longTitleEn: undefined,
+          longTitleGa: undefined,
         },
       };
 

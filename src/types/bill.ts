@@ -4,17 +4,15 @@ export interface Bill {
     billNo: string;
     billType: string;
     status: string;
-    sponsor: {
+    sponsor?: {
       by: {
         showAs: string;
       };
     };
-    titles: {
-      title: Array<{
-        lang: string;
-        value: string;
-      }>;
-    };
+    shortTitleEn?: string;
+    shortTitleGa?: string;
+    longTitleEn?: string;
+    longTitleGa?: string;
     uri: string;
   };
 }

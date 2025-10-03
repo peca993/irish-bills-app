@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import type { BillsResponse, Bill } from '../types/bill';
+import type { Bill, BillsResponse } from '../types/bill';
 
 const BASE_URL = 'https://api.oireachtas.ie/v1';
 

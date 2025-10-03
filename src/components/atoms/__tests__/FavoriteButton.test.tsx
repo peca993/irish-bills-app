@@ -16,12 +16,8 @@ const mockBill: Bill = {
         showAs: 'Test Sponsor',
       },
     },
-    titles: {
-      title: [
-        { lang: 'en', value: 'Test Bill Title' },
-        { lang: 'ga', value: 'Teideal Tástála' },
-      ],
-    },
+    shortTitleEn: 'Test Bill Title',
+    shortTitleGa: 'Teideal Tástála',
     uri: 'test-uri',
   },
 };
@@ -37,12 +33,8 @@ const mockBill2: Bill = {
         showAs: 'Another Sponsor',
       },
     },
-    titles: {
-      title: [
-        { lang: 'en', value: 'Another Test Bill' },
-        { lang: 'ga', value: 'Bille Eile' },
-      ],
-    },
+    shortTitleEn: 'Another Test Bill',
+    shortTitleGa: 'Bille Eile',
     uri: 'test-uri-2',
   },
 };

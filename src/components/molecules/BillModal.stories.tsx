@@ -14,20 +14,10 @@ const mockBill: Bill = {
         showAs: 'John Doe TD',
       },
     },
-    titles: {
-      title: [
-        {
-          lang: 'en',
-          value:
-            'An Act to provide for the establishment of a new framework for environmental protection and sustainable development in Ireland.',
-        },
-        {
-          lang: 'ga',
-          value:
-            'Acht chun soláthar a dhéanamh do bhunú creat nua um chosaint comhshaoil agus forbairt inbhuanaithe in Éirinn.',
-        },
-      ],
-    },
+    shortTitleEn:
+      'An Act to provide for the establishment of a new framework for environmental protection and sustainable development in Ireland.',
+    shortTitleGa:
+      'Acht chun soláthar a dhéanamh do bhunú creat nua um chosaint comhshaoil agus forbairt inbhuanaithe in Éirinn.',
     uri: 'sample-bill-uri',
   },
 };

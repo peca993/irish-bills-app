@@ -23,14 +23,13 @@ import { BillModal } from '../molecules/BillModal';
 
 export const FavoritesTable = () => {
   const { favorites, removeFavorite } = useFavoritesStore();
-  const [selectedBill, setSelectedBill] = useState<Bill | null>(null); // TODO: use id instead of object
+  const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const theme = useTheme();
   const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleRowClick = (favorite: FavoriteBill) => {
-    // Transform favorite back to Bill format for modal
     const bill: Bill = {
       id: favorite.id,
       bill: {
@@ -42,12 +41,8 @@ export const FavoritesTable = () => {
             showAs: favorite.sponsor,
           },
         },
-        titles: {
-          title: [
-            { lang: 'en', value: favorite.englishTitle },
-            { lang: 'ga', value: favorite.irishTitle },
-          ],
-        },
+        shortTitleEn: favorite.englishTitle,
+        shortTitleGa: favorite.irishTitle,
         uri: `favorite-${favorite.billNo}`,
       },
     };
@@ -62,11 +57,7 @@ export const FavoritesTable = () => {
 
   const handleRemoveFavorite = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    try {
-      await removeFavorite(id);
-    } catch (error) {
-      console.error('Failed to remove favorite:', error);
-    }
+    await removeFavorite(id);
   };
 
   if (favorites.length === 0) {

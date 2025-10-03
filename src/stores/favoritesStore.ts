@@ -27,14 +27,11 @@ export const useFavoritesStore = create<FavoritesState>()(
 
         try {
           await mockFavoriteBill(billNo);
-          // Silent success - user already sees the result
-        } catch (error) {
-          // Rollback on error with toast notification
+        } catch {
           set((state) => ({
             favorites: state.favorites.filter((f) => f.id !== id),
           }));
           toast.error(`Failed to add ${billNo} to favorites. Please try again.`);
-          console.error(error);
         }
       },
 
@@ -49,12 +46,9 @@ export const useFavoritesStore = create<FavoritesState>()(
 
         try {
           await mockUnfavoriteBill(bill?.billNo || id);
-          // Silent success - user already sees the result
-        } catch (error) {
-          // Rollback on error with toast notification
+        } catch {
           set({ favorites: previousFavorites });
           toast.error(`Failed to remove ${bill?.billNo || id} from favorites. Please try again.`);
-          console.error(error);
         }
       },
 

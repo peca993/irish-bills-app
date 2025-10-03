@@ -86,9 +86,7 @@ export const BillModal = ({ bill, open, onClose }: BillModalProps) => {
           </Tabs>
         </Box>
         <TabPanel value={tabValue} index={0}>
-          <Typography variant="h6" component="h3" gutterBottom>
-            English Title
-          </Typography>
+          <Typography variant="h6" component="h3" gutterBottom></Typography>
           <Typography variant="body1">{englishTitle}</Typography>
         </TabPanel>
         <TabPanel value={tabValue} index={1}>

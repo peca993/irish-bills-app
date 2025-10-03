@@ -1,9 +1,10 @@
 import type { Bill, FavoriteBill } from '../types/bill';
 
 export const getBillTitle = (bill: Bill, language: 'en' | 'ga'): string => {
-  const titles = bill.bill.titles?.title || [];
-  const title = titles.find((t) => t.lang === language);
-  return title?.value || 'No title available';
+  if (language === 'en') {
+    return bill.bill.shortTitleEn || bill.bill.longTitleEn || 'No title available';
+  }
+  return bill.bill.shortTitleGa || bill.bill.longTitleGa || 'No title available';
 };
 
 export const transformBillToFavorite = (bill: Bill): FavoriteBill => {

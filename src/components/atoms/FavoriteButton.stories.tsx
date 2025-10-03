@@ -15,12 +15,8 @@ const mockBill: Bill = {
         showAs: 'John Doe TD',
       },
     },
-    titles: {
-      title: [
-        { lang: 'en', value: 'Sample Bill for Testing' },
-        { lang: 'ga', value: 'Bille Samplach le haghaidh Tástála' },
-      ],
-    },
+    shortTitleEn: 'Sample Bill for Testing',
+    shortTitleGa: 'Bille Samplach le haghaidh Tástála',
     uri: 'sample-bill-uri',
   },
 };
