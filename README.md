@@ -4,9 +4,7 @@ A modern React application for viewing and managing Irish legislation bills from
 
 ## 🚀 Live Demo
 
-**[View Live Application →](https://your-app-url.vercel.app)**
-
-> After deploying, replace the URL above with your actual deployment link.
+**[View Live Application →](https://irish-bills-dj4yz66m6-peca993s-projects.vercel.app)**
 
 ## Features
 
@@ -27,7 +25,8 @@ A modern React application for viewing and managing Irish legislation bills from
 - **Testing**: Vitest + Testing Library
 - **Storybook**: Component documentation and testing
 - **Build Tool**: Vite
-- **Code Quality**: ESLint + TypeScript
+- **Code Quality**: ESLint + Prettier + TypeScript
+- **Deployment**: Vercel
 
 ## Technical Highlights
 
@@ -36,16 +35,19 @@ This solution demonstrates best React development practices:
 ### 🚀 Performance Optimizations
 
 **1. Next Page Prefetching**
+
 - Automatically prefetches the next page of data in the background
 - Results in instant page navigation with zero loading time
 - Implemented using React Query's `prefetchQuery`
 
 **2. Optimistic UI Updates**
+
 - Favorites toggle instantly without waiting for server response
 - UI updates immediately, then rolls back on error with toast notification
 - Provides smooth, app-like user experience
 
 **3. Smart Caching**
+
 - React Query caches API responses for 5 minutes
 - Reduces unnecessary API calls
 - Configured globally via `queryClient` for consistency
@@ -53,6 +55,7 @@ This solution demonstrates best React development practices:
 ### 💾 State Management
 
 **Zustand with Persistence**
+
 - Lightweight state management for favorites
 - Automatic localStorage persistence using `zustand/middleware`
 - Includes migration strategy for backward compatibility
@@ -61,6 +64,7 @@ This solution demonstrates best React development practices:
 ### 🎨 Component Architecture
 
 **Atomic Design Pattern**
+
 - **Atoms**: `FavoriteButton`, `LoadingSkeleton`, `ErrorBoundary`
 - **Molecules**: `BillTypeFilter`, `BillModal`
 - **Organisms**: `BillsTable`, `FavoritesTable`
@@ -68,6 +72,7 @@ This solution demonstrates best React development practices:
 - Clear separation of concerns and reusability
 
 **Storybook Integration**
+
 - Interactive component documentation
 - Visual testing environment
 - Isolated component development
@@ -75,18 +80,21 @@ This solution demonstrates best React development practices:
 ### 🔧 Technical Decisions & Workarounds
 
 **1. Client-Side Filtering**
+
 - API doesn't support `bill_type` parameter in its Swagger spec
 - Implemented client-side filtering on current page data
 - Added tooltip to explain this architectural decision
 - Server-side pagination maintained for performance
 
 **2. UUID Generation for Bills**
+
 - **Problem**: API returns duplicate `billNo` and `uri` values
 - **Solution**: Generate client-side UUID v4 at API boundary
 - Ensures unique keys for React rendering and state management
 - Uses `uuid` library for RFC4122 compliance
 
 **3. Type Generation**
+
 - **Current**: Oireachtas API uses Swagger 2.0 with incomplete schemas
 - **Implementation**: Custom TypeScript interfaces in `src/types/bill.ts`
 - **Future**: Automated type generation ready when API spec improves
@@ -94,6 +102,7 @@ This solution demonstrates best React development practices:
 ### 📱 Responsive Design
 
 **Mobile-First Approach**
+
 - Breakpoint at 900px (md): Cards below, table above
 - Full-width layout with responsive padding
 - Touch-friendly interactions
@@ -102,7 +111,8 @@ This solution demonstrates best React development practices:
 ### ✅ Code Quality
 
 - **TypeScript**: Full type safety throughout
-- **ESLint + Prettier**: Consistent code formatting
+- **ESLint**: Code linting with React and TypeScript rules
+- **Prettier**: Automated code formatting for consistency
 - **Unit Tests**: Vitest + Testing Library for components and utils
 - **Error Handling**: ErrorBoundary with user-friendly fallback UI
 - **Accessibility**: WCAG compliant Material UI components
@@ -130,29 +140,31 @@ src/
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
-git clone <repository-url>
-cd zd
+git clone https://github.com/peca993/irish-bills-app.git
+cd irish-bills-app
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
 
 The app will be available at `http://localhost:5173`
-
 
 ## Usage
 
@@ -179,6 +191,7 @@ The app will be available at `http://localhost:5173`
 ## API Integration
 
 The app connects to the official Oireachtas API:
+
 - **Base URL**: `https://api.oireachtas.ie/v1`
 - **Endpoint**: `/legislation`
 - **Features**: Pagination, filtering by bill type
@@ -186,21 +199,45 @@ The app connects to the official Oireachtas API:
 ### Favorites Implementation
 
 Favorites functionality includes:
+
 - **Optimistic UI**: Immediate visual feedback
 - **Error Handling**: Rollback on API failure
 - **Persistence**: Stored in localStorage via Zustand persist
 - **Mock API**: Console logging for demonstration
 
-## Testing
+## Available Scripts
 
-### Unit Tests
+### Development
+
 ```bash
-npm run test
+npm run dev              # Start development server
+npm run build            # Build for production
+npm run preview          # Preview production build
+```
+
+### Code Quality
+
+```bash
+npm run type-check       # Run TypeScript type checking
+npm run lint             # Run ESLint
+npm run lint:fix         # Fix ESLint errors automatically
+npm run format           # Format code with Prettier
+npm run format:check     # Check code formatting
+```
+
+### Testing
+
+```bash
+npm run test             # Run unit tests
+npm run test:ui          # Run tests with UI
+npm run test:coverage    # Generate test coverage report
 ```
 
 ### Storybook
+
 ```bash
-npm run storybook
+npm run storybook        # Start Storybook dev server
+npm run build-storybook  # Build Storybook for production
 ```
 
 Interactive component documentation and testing environment.
@@ -208,7 +245,7 @@ Interactive component documentation and testing environment.
 ## Development Principles
 
 - **SOLID Principles**: Clean, maintainable code architecture
-- **Atomic Design**: Scalable component organization  
+- **Atomic Design**: Scalable component organization
 - **Mobile-First**: Responsive design approach
 - **Accessibility**: WCAG compliant components
 - **Performance**: Optimized rendering and data fetching
@@ -219,12 +256,14 @@ Interactive component documentation and testing environment.
 While this solution is production-ready, here are potential enhancements:
 
 ### 🎨 UI/UX Enhancements
+
 - **Loading State Consistency**: Match skeleton cell sizes to actual data cells to prevent layout shift
 - **Enhanced Visual Design**: Add more sophisticated styling and animations
 - **Advanced Filtering**: Multi-select filters, date ranges, search functionality
 - **Sorting**: Column-based sorting with server-side support
 
 ### 🔧 Technical Enhancements
+
 - **Automated Type Generation**: When API Swagger spec improves, fully automated type generation
 - **Virtual Scrolling**: For handling extremely large datasets efficiently
 - **PWA Support**: Offline capability and app-like experience
@@ -232,6 +271,7 @@ While this solution is production-ready, here are potential enhancements:
 - **E2E Testing**: Playwright or Cypress for full user flow testing
 
 ### 📊 Features
+
 - **Bill Search**: Full-text search across bill titles and content
 - **Export Functionality**: Export filtered results to CSV/PDF
 - **Advanced Analytics**: Charts and statistics about bills
