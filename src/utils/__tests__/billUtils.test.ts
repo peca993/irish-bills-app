@@ -66,7 +66,6 @@ describe('billUtils', () => {
 
     it('handles missing sponsor gracefully', () => {
       const billWithoutSponsor: Bill = {
-        id: 'TEST-001-test-uri',
         ...mockBill,
         bill: {
           ...mockBill.bill,
