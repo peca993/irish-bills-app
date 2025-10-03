@@ -19,7 +19,6 @@ export const transformBillToFavorite = (bill: Bill): FavoriteBill => {
 
 export const getBillTypes = (): Array<{ value: string; label: string }> => [
   { value: '', label: 'All Types' },
-  { value: 'Public Bill', label: 'Public Bill' },
-  { value: 'Private Bill', label: 'Private Bill' },
-  { value: 'Private Members Bill', label: 'Private Members Bill' },
+  { value: 'Public', label: 'Public Bill' },
+  { value: 'Private', label: 'Private Bill' },
 ];

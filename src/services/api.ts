@@ -5,22 +5,17 @@ const BASE_URL = 'https://api.oireachtas.ie/v1';
 export interface FetchBillsParams {
   limit?: number;
   skip?: number;
-  billType?: string;
+  // Note: billType filtering is done client-side since API doesn't support it
 }
 
 export const fetchBills = async ({
-  limit = 20,
+  limit = 50, // Fetch more to allow for client-side filtering
   skip = 0,
-  billType,
 }: FetchBillsParams = {}): Promise<BillsResponse> => {
   const params = new URLSearchParams({
     limit: limit.toString(),
     skip: skip.toString(),
   });
-
-  if (billType) {
-    params.append('bill_type', billType);
-  }
 
   const response = await fetch(`${BASE_URL}/legislation?${params}`);
 

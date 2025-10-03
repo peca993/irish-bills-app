@@ -38,8 +38,8 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const { data, isLoading, error } = useBills({
-    limit: rowsPerPage,
-    skip: page * rowsPerPage,
+    limit: 100, // Fetch more data for client-side filtering
+    skip: 0,
     billType: billType || undefined,
   });
 
@@ -70,8 +70,13 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
     );
   }
 
-  const bills = data?.results || [];
-  const totalCount = data?.head?.counts?.resultCount || 0;
+  const allBills = data?.results || [];
+  const totalCount = allBills.length;
+  
+  // Client-side pagination
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const bills = allBills.slice(startIndex, endIndex);
 
   // Mobile card view
   if (isMobile) {

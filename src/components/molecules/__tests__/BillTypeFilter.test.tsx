@@ -34,7 +34,7 @@ describe('BillTypeFilter', () => {
     const publicBillOption = screen.getByText('Public Bill');
     fireEvent.click(publicBillOption);
     
-    expect(mockOnChange).toHaveBeenCalledWith('Public Bill');
+    expect(mockOnChange).toHaveBeenCalledWith('Public');
   });
 
   it('displays all bill type options', () => {
@@ -46,6 +46,5 @@ describe('BillTypeFilter', () => {
     expect(screen.getByText('All Types')).toBeInTheDocument();
     expect(screen.getByText('Public Bill')).toBeInTheDocument();
     expect(screen.getByText('Private Bill')).toBeInTheDocument();
-    expect(screen.getByText('Private Members Bill')).toBeInTheDocument();
   });
 });

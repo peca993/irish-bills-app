@@ -28,7 +28,7 @@ const meta: Meta<typeof BillTypeFilter> = {
   argTypes: {
     value: {
       control: { type: 'select' },
-      options: ['', 'Public Bill', 'Private Bill', 'Private Members Bill'],
+      options: ['', 'Public', 'Private'],
     },
   },
   args: {
@@ -47,18 +47,12 @@ export const Default: Story = {
 
 export const PublicBillSelected: Story = {
   args: {
-    value: 'Public Bill',
+    value: 'Public',
   },
 };
 
 export const PrivateBillSelected: Story = {
   args: {
-    value: 'Private Bill',
-  },
-};
-
-export const PrivateMembersBillSelected: Story = {
-  args: {
-    value: 'Private Members Bill',
+    value: 'Private',
   },
 };

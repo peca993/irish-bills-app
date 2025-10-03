@@ -79,11 +79,10 @@ describe('billUtils', () => {
     it('returns correct bill types array', () => {
       const types = getBillTypes();
       
-      expect(types).toHaveLength(4);
+      expect(types).toHaveLength(3);
       expect(types[0]).toEqual({ value: '', label: 'All Types' });
-      expect(types[1]).toEqual({ value: 'Public Bill', label: 'Public Bill' });
-      expect(types[2]).toEqual({ value: 'Private Bill', label: 'Private Bill' });
-      expect(types[3]).toEqual({ value: 'Private Members Bill', label: 'Private Members Bill' });
+      expect(types[1]).toEqual({ value: 'Public', label: 'Public Bill' });
+      expect(types[2]).toEqual({ value: 'Private', label: 'Private Bill' });
     });
   });
 });
