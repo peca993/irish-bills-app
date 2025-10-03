@@ -4,7 +4,7 @@ A modern React application for viewing and managing Irish legislation bills from
 
 ## 🚀 Live Demo
 
-**[View Live Application →](https://irish-bills-dj4yz66m6-peca993s-projects.vercel.app)**
+**[View Live Application →](https://irish-bills-app.vercel.app)**
 
 ## Features
 
