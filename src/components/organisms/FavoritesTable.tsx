@@ -27,7 +27,7 @@ export const FavoritesTable = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('lg')); // Cards for tablet and below
 
   const handleRowClick = (favorite: FavoriteBill) => {
     // Transform favorite back to Bill format for modal
@@ -82,8 +82,8 @@ export const FavoritesTable = () => {
     );
   }
 
-  // Mobile card view
-  if (isMobile) {
+  // Card view for tablet and below
+  if (isTabletOrBelow) {
     return (
       <Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -135,18 +135,18 @@ export const FavoritesTable = () => {
     );
   }
 
-  // Desktop table view
+  // Desktop table view (large screens and up)
   return (
-    <Paper>
+    <Paper elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
       <TableContainer>
-        <Table>
+        <Table sx={{ minWidth: 900 }}>
           <TableHead>
-            <TableRow>
-              <TableCell>Bill Number</TableCell>
-              <TableCell>Bill Type</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Sponsor</TableCell>
-              <TableCell align="center">Actions</TableCell>
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell sx={{ fontWeight: 600, width: '20%' }}>Bill Number</TableCell>
+              <TableCell sx={{ fontWeight: 600, width: '18%' }}>Bill Type</TableCell>
+              <TableCell sx={{ fontWeight: 600, width: '15%' }}>Status</TableCell>
+              <TableCell sx={{ fontWeight: 600, width: '37%' }}>Sponsor</TableCell>
+              <TableCell align="center" sx={{ fontWeight: 600, width: '10%' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -154,19 +154,28 @@ export const FavoritesTable = () => {
               <TableRow
                 key={favorite.id}
                 hover
-                sx={{ cursor: 'pointer' }}
+                sx={{ 
+                  cursor: 'pointer',
+                  '&:hover': {
+                    bgcolor: 'action.hover',
+                  },
+                }}
                 onClick={() => handleRowClick(favorite)}
               >
-                    <TableCell>
-                      <Box>
-                        <Typography variant="body2">{favorite.billNo}</Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
-                          {favorite.id.slice(0, 8)}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                <TableCell>{favorite.billType}</TableCell>
-                <TableCell>
+                <TableCell sx={{ py: 2.5 }}>
+                  <Box>
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      {favorite.billNo}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                      {favorite.id.slice(0, 8)}
+                    </Typography>
+                  </Box>
+                </TableCell>
+                <TableCell sx={{ py: 2.5 }}>
+                  <Typography variant="body2">{favorite.billType}</Typography>
+                </TableCell>
+                <TableCell sx={{ py: 2.5 }}>
                   <Chip
                     label={favorite.status}
                     size="small"
@@ -174,8 +183,10 @@ export const FavoritesTable = () => {
                     variant="outlined"
                   />
                 </TableCell>
-                <TableCell>{favorite.sponsor}</TableCell>
-                <TableCell align="center">
+                <TableCell sx={{ py: 2.5 }}>
+                  <Typography variant="body2">{favorite.sponsor}</Typography>
+                </TableCell>
+                <TableCell align="center" sx={{ py: 2.5 }}>
                   <IconButton
                     size="small"
                     color="error"

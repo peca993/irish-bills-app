@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { Toaster } from 'react-hot-toast';
 import { queryClient } from './lib/queryClient';
 import { ErrorBoundary } from './components/atoms/ErrorBoundary';
-import { BillsPageTemplate } from './components/templates/BillsPageTemplate';
+import { BillsPage } from './components/pages/BillsPage';
 
 const theme = createTheme({
   palette: {
@@ -36,7 +36,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ErrorBoundary>
-          <BillsPageTemplate />
+          <BillsPage />
         </ErrorBoundary>
         <Toaster
           position="top-right"

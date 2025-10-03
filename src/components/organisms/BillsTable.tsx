@@ -37,7 +37,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('lg')); // Cards for tablet and below
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useBills({
@@ -57,7 +57,6 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
         skip: (page + 1) * rowsPerPage,
       };
 
-      // Prefetch next page in the background (uses global staleTime/gcTime)
       queryClient.prefetchQuery({
         queryKey: ['bills', nextPageParams],
         queryFn: () => fetchBills(nextPageParams),
@@ -95,8 +94,8 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
   const bills = data?.results || [];
   const totalCount = data?.head?.counts?.resultCount || 0;
 
-  // Mobile card view
-  if (isMobile) {
+  // Card view for tablet and below
+  if (isTabletOrBelow) {
     return (
       <Box>
         {isLoading ? (
@@ -163,18 +162,18 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
     );
   }
 
-  // Desktop table view
+  // Desktop table view (large screens and up)
   return (
-    <Paper>
+    <Paper elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
       <TableContainer>
-        <Table>
+        <Table sx={{ minWidth: 900 }}>
           <TableHead>
-            <TableRow>
-              <TableCell>Bill Number</TableCell>
-              <TableCell>Bill Type</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Sponsor</TableCell>
-              <TableCell align="center">Favorite</TableCell>
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell sx={{ fontWeight: 600, width: '20%' }}>Bill Number</TableCell>
+              <TableCell sx={{ fontWeight: 600, width: '18%' }}>Bill Type</TableCell>
+              <TableCell sx={{ fontWeight: 600, width: '15%' }}>Status</TableCell>
+              <TableCell sx={{ fontWeight: 600, width: '37%' }}>Sponsor</TableCell>
+              <TableCell align="center" sx={{ fontWeight: 600, width: '10%' }}>Favorite</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -185,19 +184,28 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                 <TableRow
                   key={bill.id}
                   hover
-                  sx={{ cursor: 'pointer' }}
+                  sx={{ 
+                    cursor: 'pointer',
+                    '&:hover': {
+                      bgcolor: 'action.hover',
+                    },
+                  }}
                   onClick={() => handleRowClick(bill)}
                 >
-                  <TableCell>
+                  <TableCell sx={{ py: 2.5 }}>
                     <Box>
-                      <Typography variant="body2">{bill.bill.billNo}</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {bill.bill.billNo}
+                      </Typography>
                       <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
                         {bill.id}
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{bill.bill.billType}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ py: 2.5 }}>
+                    <Typography variant="body2">{bill.bill.billType}</Typography>
+                  </TableCell>
+                  <TableCell sx={{ py: 2.5 }}>
                     <Chip
                       label={bill.bill.status}
                       size="small"
@@ -205,8 +213,10 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                       variant="outlined"
                     />
                   </TableCell>
-                  <TableCell>{bill.bill.sponsor?.by?.showAs || 'Unknown'}</TableCell>
-                  <TableCell align="center">
+                  <TableCell sx={{ py: 2.5 }}>
+                    <Typography variant="body2">{bill.bill.sponsor?.by?.showAs || 'Unknown'}</Typography>
+                  </TableCell>
+                  <TableCell align="center" sx={{ py: 2.5 }}>
                     <FavoriteButton bill={bill} />
                   </TableCell>
                 </TableRow>

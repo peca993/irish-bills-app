@@ -9,10 +9,11 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
+import { useFavoritesStore } from '../../stores/favoritesStore';
+import { BillTypeFilter } from '../molecules/BillTypeFilter';
 import { BillsTable } from '../organisms/BillsTable';
 import { FavoritesTable } from '../organisms/FavoritesTable';
-import { BillTypeFilter } from '../molecules/BillTypeFilter';
-import { useFavoritesStore } from '../../stores/favoritesStore';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,7 +34,7 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
   );
 };
 
-export const BillsPageTemplate = () => {
+export const BillsPage = () => {
   const [tabValue, setTabValue] = useState(0);
   const [billTypeFilter, setBillTypeFilter] = useState('');
   const { favorites } = useFavoritesStore();
@@ -87,3 +88,4 @@ export const BillsPageTemplate = () => {
     </Container>
   );
 };
+

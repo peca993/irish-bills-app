@@ -33,12 +33,13 @@ src/
 │   ├── atoms/          # Basic building blocks (FavoriteButton, LoadingSkeleton)
 │   ├── molecules/      # Simple combinations (BillTypeFilter, BillModal)
 │   ├── organisms/      # Complex components (BillsTable, FavoritesTable)
-│   └── templates/      # Page layouts (BillsPageTemplate)
+│   └── pages/          # Application pages (BillsPage)
 ├── hooks/              # Custom React hooks
 ├── services/           # API layer
 ├── stores/             # Zustand state management
 ├── types/              # TypeScript definitions
-└── utils/              # Helper functions
+├── utils/              # Helper functions
+└── lib/                # Third-party library configuration
 ```
 
 ## Getting Started
