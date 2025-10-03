@@ -1,4 +1,5 @@
-import type { BillsResponse } from '../types/bill';
+import { v4 as uuidv4 } from 'uuid';
+import type { BillsResponse, Bill } from '../types/bill';
 
 const BASE_URL = 'https://api.oireachtas.ie/v1';
 
@@ -23,7 +24,16 @@ export const fetchBills = async ({
     throw new Error(`Failed to fetch bills: ${response.statusText}`);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  // Add unique client-side UUID to each bill at the API boundary
+  return {
+    ...data,
+    results: data.results.map((bill: Bill) => ({
+      ...bill,
+      id: uuidv4(),
+    })),
+  };
 };
 
 export const mockFavoriteBill = async (billNo: string): Promise<void> => {

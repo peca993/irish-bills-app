@@ -104,7 +104,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
             {Array.from({ length: 5 }).map((_, index) => (
               <Card key={index}>
                 <CardContent>
-                  <LoadingSkeleton rows={3} columns={1} />
+                  <LoadingSkeleton rows={4} variant="card" />
                 </CardContent>
               </Card>
             ))}
@@ -113,17 +113,22 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {bills.map((bill) => (
               <Card
-                key={bill.bill.uri}
+                key={bill.id}
                 sx={{ cursor: 'pointer' }}
                 onClick={() => handleRowClick(bill)}
               >
-                <CardContent>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                    <Typography variant="h6" component="h3">
-                      {bill.bill.billNo}
-                    </Typography>
-                    <FavoriteButton bill={bill} size="small" />
-                  </Box>
+                    <CardContent>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                        <Box>
+                          <Typography variant="h6" component="h3">
+                            {bill.bill.billNo}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                            {bill.id}
+                          </Typography>
+                        </Box>
+                        <FavoriteButton bill={bill} size="small" />
+                      </Box>
                   <Typography color="text.secondary" gutterBottom>
                     {bill.bill.billType}
                   </Typography>
@@ -178,12 +183,19 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
             ) : (
               bills.map((bill) => (
                 <TableRow
-                  key={bill.bill.uri}
+                  key={bill.id}
                   hover
                   sx={{ cursor: 'pointer' }}
                   onClick={() => handleRowClick(bill)}
                 >
-                  <TableCell>{bill.bill.billNo}</TableCell>
+                  <TableCell>
+                    <Box>
+                      <Typography variant="body2">{bill.bill.billNo}</Typography>
+                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                        {bill.id}
+                      </Typography>
+                    </Box>
+                  </TableCell>
                   <TableCell>{bill.bill.billType}</TableCell>
                   <TableCell>
                     <Chip

@@ -11,14 +11,13 @@ interface FavoriteButtonProps {
 
 export const FavoriteButton = ({ bill, size = 'medium' }: FavoriteButtonProps) => {
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
-  const billNo = bill.bill.billNo;
-  const favorite = isFavorite(billNo);
+  const favorite = isFavorite(bill.id);
 
   const handleToggleFavorite = async (event: React.MouseEvent) => {
     event.stopPropagation();
     
     if (favorite) {
-      await removeFavorite(billNo);
+      await removeFavorite(bill.id);
     } else {
       await addFavorite(transformBillToFavorite(bill));
     }

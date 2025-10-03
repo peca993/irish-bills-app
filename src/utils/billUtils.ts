@@ -8,6 +8,7 @@ export const getBillTitle = (bill: Bill, language: 'en' | 'ga'): string => {
 
 export const transformBillToFavorite = (bill: Bill): FavoriteBill => {
   return {
+    id: bill.id,
     billNo: bill.bill.billNo,
     billType: bill.bill.billType,
     status: bill.bill.status,

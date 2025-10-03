@@ -1,4 +1,5 @@
 export interface Bill {
+  id: string; // Client-side UUID v4 (API can return duplicates)
   bill: {
     billNo: string;
     billType: string;
@@ -33,6 +34,7 @@ export interface BillType {
 }
 
 export interface FavoriteBill {
+  id: string; // Client-side UUID v4
   billNo: string;
   billType: string;
   status: string;

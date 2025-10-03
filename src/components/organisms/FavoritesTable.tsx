@@ -32,6 +32,7 @@ export const FavoritesTable = () => {
   const handleRowClick = (favorite: FavoriteBill) => {
     // Transform favorite back to Bill format for modal
     const bill: Bill = {
+      id: favorite.id,
       bill: {
         billNo: favorite.billNo,
         billType: favorite.billType,
@@ -59,10 +60,10 @@ export const FavoritesTable = () => {
     setSelectedBill(null);
   };
 
-  const handleRemoveFavorite = async (billNo: string, event: React.MouseEvent) => {
+  const handleRemoveFavorite = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
     try {
-      await removeFavorite(billNo);
+      await removeFavorite(id);
     } catch (error) {
       console.error('Failed to remove favorite:', error);
     }
@@ -86,26 +87,31 @@ export const FavoritesTable = () => {
     return (
       <Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {favorites.map((favorite) => (
-            <Card
-              key={favorite.billNo}
-              sx={{ cursor: 'pointer' }}
-              onClick={() => handleRowClick(favorite)}
-            >
-              <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                  <Typography variant="h6" component="h3">
-                    {favorite.billNo}
-                  </Typography>
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={(e) => handleRemoveFavorite(favorite.billNo, e)}
-                    aria-label="Remove from favorites"
-                  >
-                    <Delete />
-                  </IconButton>
-                </Box>
+            {favorites.map((favorite) => (
+              <Card
+                key={favorite.id}
+                sx={{ cursor: 'pointer' }}
+                onClick={() => handleRowClick(favorite)}
+              >
+                    <CardContent>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                        <Box>
+                          <Typography variant="h6" component="h3">
+                            {favorite.billNo}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                            {favorite.id.slice(0, 8)}
+                          </Typography>
+                        </Box>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={(e) => handleRemoveFavorite(favorite.id, e)}
+                          aria-label="Remove from favorites"
+                        >
+                          <Delete />
+                        </IconButton>
+                      </Box>
                 <Typography color="text.secondary" gutterBottom>
                   {favorite.billType}
                 </Typography>
@@ -146,12 +152,19 @@ export const FavoritesTable = () => {
           <TableBody>
             {favorites.map((favorite) => (
               <TableRow
-                key={favorite.billNo}
+                key={favorite.id}
                 hover
                 sx={{ cursor: 'pointer' }}
                 onClick={() => handleRowClick(favorite)}
               >
-                <TableCell>{favorite.billNo}</TableCell>
+                    <TableCell>
+                      <Box>
+                        <Typography variant="body2">{favorite.billNo}</Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                          {favorite.id.slice(0, 8)}
+                        </Typography>
+                      </Box>
+                    </TableCell>
                 <TableCell>{favorite.billType}</TableCell>
                 <TableCell>
                   <Chip
@@ -166,7 +179,7 @@ export const FavoritesTable = () => {
                   <IconButton
                     size="small"
                     color="error"
-                    onClick={(e) => handleRemoveFavorite(favorite.billNo, e)}
+                    onClick={(e) => handleRemoveFavorite(favorite.id, e)}
                     aria-label="Remove from favorites"
                   >
                     <Delete />

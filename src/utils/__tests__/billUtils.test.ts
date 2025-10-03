@@ -2,6 +2,7 @@ import { getBillTitle, transformBillToFavorite, getBillTypes } from '../billUtil
 import type { Bill } from '../../types/bill';
 
 const mockBill: Bill = {
+  id: 'TEST-001-test-uri',
   bill: {
     billNo: 'TEST-001',
     billType: 'Public Bill',
@@ -35,6 +36,7 @@ describe('billUtils', () => {
 
     it('returns fallback message when title not found', () => {
       const billWithoutTitles: Bill = {
+        id: 'TEST-001-test-uri',
         ...mockBill,
         bill: {
           ...mockBill.bill,
@@ -52,6 +54,7 @@ describe('billUtils', () => {
       const favorite = transformBillToFavorite(mockBill);
       
       expect(favorite).toEqual({
+        id: 'TEST-001-test-uri',
         billNo: 'TEST-001',
         billType: 'Public Bill',
         status: 'Published',
@@ -63,6 +66,7 @@ describe('billUtils', () => {
 
     it('handles missing sponsor gracefully', () => {
       const billWithoutSponsor: Bill = {
+        id: 'TEST-001-test-uri',
         ...mockBill,
         bill: {
           ...mockBill.bill,
