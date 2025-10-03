@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { Close } from '@mui/icons-material';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Tabs,
-  Tab,
   Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Tab,
+  Tabs,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { useState } from 'react';
 import type { Bill } from '../../types/bill';
 import { getBillTitle } from '../../utils/billUtils';
 
@@ -86,7 +86,9 @@ export const BillModal = ({ bill, open, onClose }: BillModalProps) => {
           </Tabs>
         </Box>
         <TabPanel value={tabValue} index={0}>
-          <Typography variant="h6" component="h3" gutterBottom></Typography>
+          <Typography variant="h6" component="h3" gutterBottom>
+            English Title
+          </Typography>
           <Typography variant="body1">{englishTitle}</Typography>
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
