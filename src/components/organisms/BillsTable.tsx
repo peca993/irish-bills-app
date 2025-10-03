@@ -16,10 +16,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useBills } from '../../hooks/useBills';
-import { fetchBills } from '../../services/api';
 import type { Bill } from '../../types/bill';
 import { FavoriteButton } from '../atoms/FavoriteButton';
 import { LoadingSkeleton } from '../atoms/LoadingSkeleton';
@@ -37,31 +35,13 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
 
   const theme = useTheme();
   const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('md'));
-  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useBills({
     limit: rowsPerPage,
     skip: page * rowsPerPage,
     billType: billType || undefined,
+    enablePrefetch: true,
   });
-
-  // Prefetch next page for instant navigation
-  useEffect(() => {
-    const totalCount = data?.head?.counts?.resultCount || 0;
-    const hasNextPage = (page + 1) * rowsPerPage < totalCount;
-
-    if (hasNextPage && !isLoading) {
-      const nextPageParams = {
-        limit: rowsPerPage,
-        skip: (page + 1) * rowsPerPage,
-      };
-
-      queryClient.prefetchQuery({
-        queryKey: ['bills', nextPageParams],
-        queryFn: () => fetchBills(nextPageParams),
-      });
-    }
-  }, [page, rowsPerPage, data, isLoading, queryClient]);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);

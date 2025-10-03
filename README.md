@@ -263,6 +263,7 @@ While this solution is production-ready, here are potential enhancements:
 
 ### 🔧 Technical Enhancements
 
+- **Biome Integration**: Replace ESLint + Prettier with [Biome](https://biomejs.dev/) for faster, unified linting and formatting
 - **Automated Type Generation**: When API Swagger spec improves, fully automated type generation
 - **Virtual Scrolling**: For handling extremely large datasets efficiently
 - **PWA Support**: Offline capability and app-like experience
