@@ -23,6 +23,84 @@ A modern React application for viewing and managing Irish legislation bills from
 - **Build Tool**: Vite
 - **Code Quality**: ESLint + TypeScript
 
+## Technical Highlights
+
+This solution demonstrates best React development practices:
+
+### 🚀 Performance Optimizations
+
+**1. Next Page Prefetching**
+- Automatically prefetches the next page of data in the background
+- Results in instant page navigation with zero loading time
+- Implemented using React Query's `prefetchQuery`
+
+**2. Optimistic UI Updates**
+- Favorites toggle instantly without waiting for server response
+- UI updates immediately, then rolls back on error with toast notification
+- Provides smooth, app-like user experience
+
+**3. Smart Caching**
+- React Query caches API responses for 5 minutes
+- Reduces unnecessary API calls
+- Configured globally via `queryClient` for consistency
+
+### 💾 State Management
+
+**Zustand with Persistence**
+- Lightweight state management for favorites
+- Automatic localStorage persistence using `zustand/middleware`
+- Includes migration strategy for backward compatibility
+- Pure optimistic updates with error recovery
+
+### 🎨 Component Architecture
+
+**Atomic Design Pattern**
+- **Atoms**: `FavoriteButton`, `LoadingSkeleton`, `ErrorBoundary`
+- **Molecules**: `BillTypeFilter`, `BillModal`
+- **Organisms**: `BillsTable`, `FavoritesTable`
+- **Pages**: `BillsPage`
+- Clear separation of concerns and reusability
+
+**Storybook Integration**
+- Interactive component documentation
+- Visual testing environment
+- Isolated component development
+
+### 🔧 Technical Decisions & Workarounds
+
+**1. Client-Side Filtering**
+- API doesn't support `bill_type` parameter in its Swagger spec
+- Implemented client-side filtering on current page data
+- Added tooltip to explain this architectural decision
+- Server-side pagination maintained for performance
+
+**2. UUID Generation for Bills**
+- **Problem**: API returns duplicate `billNo` and `uri` values
+- **Solution**: Generate client-side UUID v4 at API boundary
+- Ensures unique keys for React rendering and state management
+- Uses `uuid` library for RFC4122 compliance
+
+**3. Type Generation**
+- **Current**: Oireachtas API uses Swagger 2.0 with incomplete schemas
+- **Implementation**: Custom TypeScript interfaces in `src/types/bill.ts`
+- **Future**: Automated type generation ready when API spec improves
+
+### 📱 Responsive Design
+
+**Mobile-First Approach**
+- Breakpoint at 900px (md): Cards below, table above
+- Full-width layout with responsive padding
+- Touch-friendly interactions
+- Optimized for all screen sizes
+
+### ✅ Code Quality
+
+- **TypeScript**: Full type safety throughout
+- **ESLint + Prettier**: Consistent code formatting
+- **Unit Tests**: Vitest + Testing Library for components and utils
+- **Error Handling**: ErrorBoundary with user-friendly fallback UI
+- **Accessibility**: WCAG compliant Material UI components
+
 ## Architecture
 
 The project follows **Atomic Design** principles:
@@ -69,18 +147,6 @@ npm run dev
 
 The app will be available at `http://localhost:5173`
 
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run test` - Run unit tests
-- `npm run test:ui` - Run tests with UI
-- `npm run test:coverage` - Run tests with coverage
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
-- `npm run storybook` - Start Storybook
-- `npm run build-storybook` - Build Storybook
 
 ## Usage
 
@@ -126,12 +192,6 @@ Favorites functionality includes:
 npm run test
 ```
 
-Tests cover:
-- Component rendering and interactions
-- Utility functions
-- API integration
-- State management
-
 ### Storybook
 ```bash
 npm run storybook
@@ -148,21 +208,25 @@ Interactive component documentation and testing environment.
 - **Performance**: Optimized rendering and data fetching
 - **Type Safety**: Full TypeScript coverage
 
-## Browser Support
+## Future Improvements
 
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+While this solution is production-ready, here are potential enhancements:
 
-## Contributing
+### 🎨 UI/UX Enhancements
+- **Loading State Consistency**: Match skeleton cell sizes to actual data cells to prevent layout shift
+- **Enhanced Visual Design**: Add more sophisticated styling and animations
+- **Advanced Filtering**: Multi-select filters, date ranges, search functionality
+- **Sorting**: Column-based sorting with server-side support
 
-1. Follow the existing code style and patterns
-2. Write tests for new features
-3. Update Storybook stories for new components
-4. Ensure TypeScript compliance
-5. Test on mobile devices
+### 🔧 Technical Enhancements
+- **Automated Type Generation**: When API Swagger spec improves, fully automated type generation
+- **Virtual Scrolling**: For handling extremely large datasets efficiently
+- **PWA Support**: Offline capability and app-like experience
+- **Internationalization**: i18n support for multiple languages beyond EN/GA
+- **E2E Testing**: Playwright or Cypress for full user flow testing
 
-## License
-
-This project is for assessment purposes.
+### 📊 Features
+- **Bill Search**: Full-text search across bill titles and content
+- **Export Functionality**: Export filtered results to CSV/PDF
+- **Advanced Analytics**: Charts and statistics about bills
+- **Bill Comparison**: Side-by-side comparison of multiple bills
