@@ -19,9 +19,7 @@ export const useBills = ({ billType, ...apiParams }: UseBillsParams = {}) => {
 
     if (!billType) return query.data;
 
-    const filteredResults = query.data.results.filter(
-      (bill) => bill.bill.billType === billType
-    );
+    const filteredResults = query.data.results.filter((bill) => bill.bill.billType === billType);
 
     return {
       ...query.data,

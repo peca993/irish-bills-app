@@ -1,33 +1,34 @@
-import { useState } from 'react';
+import { Delete } from '@mui/icons-material';
 import {
+  Box,
+  Card,
+  CardContent,
+  Chip,
+  IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Typography,
-  Box,
   useMediaQuery,
   useTheme,
-  Card,
-  CardContent,
-  Chip,
-  IconButton,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { useState } from 'react';
 import { useFavoritesStore } from '../../stores/favoritesStore';
-import { BillModal } from '../molecules/BillModal';
 import type { Bill, FavoriteBill } from '../../types/bill';
+import { BillModal } from '../molecules/BillModal';
 
 export const FavoritesTable = () => {
   const { favorites, removeFavorite } = useFavoritesStore();
-  const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
+  const [selectedBill, setSelectedBill] = useState<Bill | null>(null); // TODO: use id instead of object
   const [modalOpen, setModalOpen] = useState(false);
 
   const theme = useTheme();
   const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('md'));
+
   const handleRowClick = (favorite: FavoriteBill) => {
     // Transform favorite back to Bill format for modal
     const bill: Bill = {
@@ -86,31 +87,42 @@ export const FavoritesTable = () => {
     return (
       <Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {favorites.map((favorite) => (
-              <Card
-                key={favorite.id}
-                sx={{ cursor: 'pointer' }}
-                onClick={() => handleRowClick(favorite)}
-              >
-                    <CardContent>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                        <Box>
-                          <Typography variant="h6" component="h3">
-                            {favorite.billNo}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
-                            {favorite.id.slice(0, 8)}
-                          </Typography>
-                        </Box>
-                        <IconButton
-                          size="small"
-                          color="error"
-                          onClick={(e) => handleRemoveFavorite(favorite.id, e)}
-                          aria-label="Remove from favorites"
-                        >
-                          <Delete />
-                        </IconButton>
-                      </Box>
+          {favorites.map((favorite) => (
+            <Card
+              key={favorite.id}
+              sx={{ cursor: 'pointer' }}
+              onClick={() => handleRowClick(favorite)}
+            >
+              <CardContent>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    mb: 1,
+                  }}
+                >
+                  <Box>
+                    <Typography variant="h6" component="h3">
+                      {favorite.billNo}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ fontSize: '0.65rem' }}
+                    >
+                      {favorite.id.slice(0, 8)}
+                    </Typography>
+                  </Box>
+                  <IconButton
+                    size="small"
+                    color="error"
+                    onClick={(e) => handleRemoveFavorite(favorite.id, e)}
+                    aria-label="Remove from favorites"
+                  >
+                    <Delete />
+                  </IconButton>
+                </Box>
                 <Typography color="text.secondary" gutterBottom>
                   {favorite.billType}
                 </Typography>
@@ -121,14 +133,12 @@ export const FavoritesTable = () => {
                   variant="outlined"
                   sx={{ mb: 1 }}
                 />
-                <Typography variant="body2">
-                  Sponsor: {favorite.sponsor}
-                </Typography>
+                <Typography variant="body2">Sponsor: {favorite.sponsor}</Typography>
               </CardContent>
             </Card>
           ))}
         </Box>
-        
+
         <BillModal bill={selectedBill} open={modalOpen} onClose={handleCloseModal} />
       </Box>
     );
@@ -145,7 +155,9 @@ export const FavoritesTable = () => {
               <TableCell sx={{ fontWeight: 600, width: '18%' }}>Bill Type</TableCell>
               <TableCell sx={{ fontWeight: 600, width: '15%' }}>Status</TableCell>
               <TableCell sx={{ fontWeight: 600, width: '37%' }}>Sponsor</TableCell>
-              <TableCell align="center" sx={{ fontWeight: 600, width: '10%' }}>Actions</TableCell>
+              <TableCell align="center" sx={{ fontWeight: 600, width: '10%' }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -153,7 +165,7 @@ export const FavoritesTable = () => {
               <TableRow
                 key={favorite.id}
                 hover
-                sx={{ 
+                sx={{
                   cursor: 'pointer',
                   '&:hover': {
                     bgcolor: 'action.hover',
@@ -166,7 +178,11 @@ export const FavoritesTable = () => {
                     <Typography variant="body1" sx={{ fontWeight: 500 }}>
                       {favorite.billNo}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ fontSize: '0.65rem' }}
+                    >
                       {favorite.id.slice(0, 8)}
                     </Typography>
                   </Box>
@@ -175,12 +191,7 @@ export const FavoritesTable = () => {
                   <Typography variant="body2">{favorite.billType}</Typography>
                 </TableCell>
                 <TableCell sx={{ py: 2.5 }}>
-                  <Chip
-                    label={favorite.status}
-                    size="small"
-                    color="primary"
-                    variant="outlined"
-                  />
+                  <Chip label={favorite.status} size="small" color="primary" variant="outlined" />
                 </TableCell>
                 <TableCell sx={{ py: 2.5 }}>
                   <Typography variant="body2">{favorite.sponsor}</Typography>
@@ -200,7 +211,7 @@ export const FavoritesTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      
+
       <BillModal bill={selectedBill} open={modalOpen} onClose={handleCloseModal} />
     </Paper>
   );

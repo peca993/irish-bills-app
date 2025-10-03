@@ -6,7 +6,11 @@ interface LoadingSkeletonProps {
   variant?: 'table' | 'card';
 }
 
-export const LoadingSkeleton = ({ rows = 5, columns = 5, variant = 'table' }: LoadingSkeletonProps) => {
+export const LoadingSkeleton = ({
+  rows = 5,
+  columns = 5,
+  variant = 'table',
+}: LoadingSkeletonProps) => {
   if (variant === 'card') {
     return (
       <>

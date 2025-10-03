@@ -59,9 +59,7 @@ const renderWithProviders = (component: React.ReactElement) => {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        {component}
-      </ThemeProvider>
+      <ThemeProvider theme={theme}>{component}</ThemeProvider>
     </QueryClientProvider>
   );
 };
@@ -73,14 +71,14 @@ describe('FavoriteButton', () => {
 
   it('renders unfavorited state initially', () => {
     renderWithProviders(<FavoriteButton bill={mockBill} />);
-    
+
     const button = screen.getByLabelText('Add to favorites');
     expect(button).toBeInTheDocument();
   });
 
   it('toggles favorite state when clicked', async () => {
     renderWithProviders(<FavoriteButton bill={mockBill} />);
-    
+
     const button = screen.getByLabelText('Add to favorites');
     fireEvent.click(button);
 
@@ -92,7 +90,7 @@ describe('FavoriteButton', () => {
   it('toggles immediately with optimistic UI', () => {
     // Use a different bill to avoid localStorage conflicts
     renderWithProviders(<FavoriteButton bill={mockBill2} />);
-    
+
     const addButton = screen.getByLabelText('Add to favorites');
     fireEvent.click(addButton);
 

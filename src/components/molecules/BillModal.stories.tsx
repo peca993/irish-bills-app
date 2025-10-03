@@ -16,13 +16,15 @@ const mockBill: Bill = {
     },
     titles: {
       title: [
-        { 
-          lang: 'en', 
-          value: 'An Act to provide for the establishment of a new framework for environmental protection and sustainable development in Ireland.' 
+        {
+          lang: 'en',
+          value:
+            'An Act to provide for the establishment of a new framework for environmental protection and sustainable development in Ireland.',
         },
-        { 
-          lang: 'ga', 
-          value: 'Acht chun soláthar a dhéanamh do bhunú creat nua um chosaint comhshaoil agus forbairt inbhuanaithe in Éirinn.' 
+        {
+          lang: 'ga',
+          value:
+            'Acht chun soláthar a dhéanamh do bhunú creat nua um chosaint comhshaoil agus forbairt inbhuanaithe in Éirinn.',
         },
       ],
     },
@@ -39,7 +41,8 @@ const meta: Meta<typeof BillModal> = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'A modal component that displays bill details with English and Irish language tabs.',
+        component:
+          'A modal component that displays bill details with English and Irish language tabs.',
       },
     },
   },

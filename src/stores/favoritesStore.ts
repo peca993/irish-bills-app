@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
-import type { FavoriteBill } from '../types/bill';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { mockFavoriteBill, mockUnfavoriteBill } from '../services/api';
+import type { FavoriteBill } from '../types/bill';
 
 interface FavoritesState {
   favorites: FavoriteBill[];
@@ -19,7 +19,7 @@ export const useFavoritesStore = create<FavoritesState>()(
 
       addFavorite: async (bill: FavoriteBill) => {
         const { id, billNo } = bill;
-        
+
         // Optimistic update
         set((state) => ({
           favorites: [...state.favorites, bill],
@@ -34,13 +34,14 @@ export const useFavoritesStore = create<FavoritesState>()(
             favorites: state.favorites.filter((f) => f.id !== id),
           }));
           toast.error(`Failed to add ${billNo} to favorites. Please try again.`);
+          console.error(error);
         }
       },
 
       removeFavorite: async (id: string) => {
         const previousFavorites = get().favorites;
         const bill = previousFavorites.find((f) => f.id === id);
-        
+
         // Optimistic update
         set((state) => ({
           favorites: state.favorites.filter((f) => f.id !== id),
@@ -53,6 +54,7 @@ export const useFavoritesStore = create<FavoritesState>()(
           // Rollback on error with toast notification
           set({ favorites: previousFavorites });
           toast.error(`Failed to remove ${bill?.billNo || id} from favorites. Please try again.`);
+          console.error(error);
         }
       },
 
@@ -64,15 +66,16 @@ export const useFavoritesStore = create<FavoritesState>()(
       name: 'favorites-storage',
       partialize: (state) => ({ favorites: state.favorites }),
       version: 1,
-      migrate: (persistedState: any) => {
-        // Migrate old favorites without ID to include UUID
-        if (persistedState?.favorites) {
-          persistedState.favorites = persistedState.favorites.map((fav: any) => ({
+      // TODO: Fix types
+      migrate: (persistedState: unknown) => {
+        const state = persistedState as { favorites?: FavoriteBill[] };
+        if (state?.favorites) {
+          state.favorites = state.favorites.map((fav) => ({
             ...fav,
-            id: fav.id || uuidv4(), // Add UUID if missing
+            id: fav.id || uuidv4(),
           }));
         }
-        return persistedState;
+        return state;
       },
     }
   )

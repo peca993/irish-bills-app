@@ -14,7 +14,6 @@ import { BillTypeFilter } from '../molecules/BillTypeFilter';
 import { BillsTable } from '../organisms/BillsTable';
 import { FavoritesTable } from '../organisms/FavoritesTable';
 
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -88,4 +87,3 @@ export const BillsPage = () => {
     </Container>
   );
 };
-

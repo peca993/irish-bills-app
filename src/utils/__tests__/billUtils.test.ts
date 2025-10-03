@@ -1,5 +1,6 @@
-import { getBillTitle, transformBillToFavorite, getBillTypes } from '../billUtils';
+import { describe, expect, it } from 'vitest';
 import type { Bill } from '../../types/bill';
+import { getBillTitle, getBillTypes, transformBillToFavorite } from '../billUtils';
 
 const mockBill: Bill = {
   id: 'TEST-001-test-uri',
@@ -36,14 +37,13 @@ describe('billUtils', () => {
 
     it('returns fallback message when title not found', () => {
       const billWithoutTitles: Bill = {
-        id: 'TEST-001-test-uri',
         ...mockBill,
         bill: {
           ...mockBill.bill,
           titles: { title: [] },
         },
       };
-      
+
       const title = getBillTitle(billWithoutTitles, 'en');
       expect(title).toBe('No title available');
     });
@@ -52,7 +52,7 @@ describe('billUtils', () => {
   describe('transformBillToFavorite', () => {
     it('transforms Bill to FavoriteBill correctly', () => {
       const favorite = transformBillToFavorite(mockBill);
-      
+
       expect(favorite).toEqual({
         id: 'TEST-001-test-uri',
         billNo: 'TEST-001',
@@ -73,7 +73,7 @@ describe('billUtils', () => {
           sponsor: { by: { showAs: '' } },
         },
       };
-      
+
       const favorite = transformBillToFavorite(billWithoutSponsor);
       expect(favorite.sponsor).toBe('Unknown');
     });
@@ -82,7 +82,7 @@ describe('billUtils', () => {
   describe('getBillTypes', () => {
     it('returns correct bill types array', () => {
       const types = getBillTypes();
-      
+
       expect(types).toHaveLength(3);
       expect(types[0]).toEqual({ value: '', label: 'All Types' });
       expect(types[1]).toEqual({ value: 'Public', label: 'Public Bill' });

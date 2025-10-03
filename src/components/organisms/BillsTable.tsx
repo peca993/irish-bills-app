@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import {
   Table,
@@ -111,23 +110,30 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {bills.map((bill) => (
-              <Card
-                key={bill.id}
-                sx={{ cursor: 'pointer' }}
-                onClick={() => handleRowClick(bill)}
-              >
-                    <CardContent>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                        <Box>
-                          <Typography variant="h6" component="h3">
-                            {bill.bill.billNo}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
-                            {bill.id}
-                          </Typography>
-                        </Box>
-                        <FavoriteButton bill={bill} size="small" />
-                      </Box>
+              <Card key={bill.id} sx={{ cursor: 'pointer' }} onClick={() => handleRowClick(bill)}>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      mb: 1,
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="h6" component="h3">
+                        {bill.bill.billNo}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ fontSize: '0.65rem' }}
+                      >
+                        {bill.id}
+                      </Typography>
+                    </Box>
+                    <FavoriteButton bill={bill} size="small" />
+                  </Box>
                   <Typography color="text.secondary" gutterBottom>
                     {bill.bill.billType}
                   </Typography>
@@ -146,7 +152,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
             ))}
           </Box>
         )}
-        
+
         <TablePagination
           component="div"
           count={totalCount}
@@ -156,7 +162,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
           rowsPerPageOptions={[10, 20, 50]}
         />
-        
+
         <BillModal bill={selectedBill} open={modalOpen} onClose={handleCloseModal} />
       </Box>
     );
@@ -173,7 +179,9 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
               <TableCell sx={{ fontWeight: 600, width: '18%' }}>Bill Type</TableCell>
               <TableCell sx={{ fontWeight: 600, width: '15%' }}>Status</TableCell>
               <TableCell sx={{ fontWeight: 600, width: '37%' }}>Sponsor</TableCell>
-              <TableCell align="center" sx={{ fontWeight: 600, width: '10%' }}>Favorite</TableCell>
+              <TableCell align="center" sx={{ fontWeight: 600, width: '10%' }}>
+                Favorite
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -184,7 +192,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                 <TableRow
                   key={bill.id}
                   hover
-                  sx={{ 
+                  sx={{
                     cursor: 'pointer',
                     '&:hover': {
                       bgcolor: 'action.hover',
@@ -197,7 +205,11 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                       <Typography variant="body1" sx={{ fontWeight: 500 }}>
                         {bill.bill.billNo}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ fontSize: '0.65rem' }}
+                      >
                         {bill.id}
                       </Typography>
                     </Box>
@@ -214,7 +226,9 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                     />
                   </TableCell>
                   <TableCell sx={{ py: 2.5 }}>
-                    <Typography variant="body2">{bill.bill.sponsor?.by?.showAs || 'Unknown'}</Typography>
+                    <Typography variant="body2">
+                      {bill.bill.sponsor?.by?.showAs || 'Unknown'}
+                    </Typography>
                   </TableCell>
                   <TableCell align="center" sx={{ py: 2.5 }}>
                     <FavoriteButton bill={bill} />
@@ -225,7 +239,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      
+
       <TablePagination
         component="div"
         count={totalCount}
@@ -235,7 +249,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[10, 20, 50]}
       />
-      
+
       <BillModal bill={selectedBill} open={modalOpen} onClose={handleCloseModal} />
     </Paper>
   );

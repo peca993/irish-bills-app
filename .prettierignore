@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+build
+.vite
+storybook-static
+
+# Coverage
+coverage
+
+# Misc
+.DS_Store
+*.log
+.env
+.env.local
+.env.production.local
+.env.development.local
+
+# IDE
+.vscode
+.idea

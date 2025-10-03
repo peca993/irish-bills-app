@@ -40,7 +40,8 @@ const meta: Meta<typeof FavoriteButton> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A button component for favoriting/unfavoriting bills with optimistic UI updates.',
+        component:
+          'A button component for favoriting/unfavoriting bills with optimistic UI updates.',
       },
     },
   },

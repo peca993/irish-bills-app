@@ -17,16 +17,16 @@ export const BillTypeFilter = ({ value, onChange }: BillTypeFilterProps) => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Tooltip 
+      <Tooltip
         title="Filtering is performed on the current page only, as the Oireachtas API doesn't support bill type filtering"
         placement="top"
       >
-        <InfoOutlined 
-          sx={{ 
-            color: 'text.secondary', 
+        <InfoOutlined
+          sx={{
+            color: 'text.secondary',
             fontSize: 18,
-            cursor: 'help'
-          }} 
+            cursor: 'help',
+          }}
         />
       </Tooltip>
       <FormControl size="small" sx={{ minWidth: 200 }}>

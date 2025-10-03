@@ -15,7 +15,7 @@ export const FavoriteButton = ({ bill, size = 'medium' }: FavoriteButtonProps) =
 
   const handleToggleFavorite = async (event: React.MouseEvent) => {
     event.stopPropagation();
-    
+
     if (favorite) {
       await removeFavorite(bill.id);
     } else {
