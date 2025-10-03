@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -18,8 +18,10 @@ import {
   Typography,
   Chip,
 } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import type { Bill } from '../../types/bill';
 import { useBills } from '../../hooks/useBills';
+import { fetchBills } from '../../services/api';
 import { LoadingSkeleton } from '../atoms/LoadingSkeleton';
 import { FavoriteButton } from '../atoms/FavoriteButton';
 import { BillModal } from '../molecules/BillModal';
@@ -36,12 +38,32 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useBills({
-    limit: 100, // Fetch more data for client-side filtering
-    skip: 0,
+    limit: rowsPerPage,
+    skip: page * rowsPerPage,
     billType: billType || undefined,
   });
+
+  // Prefetch next page for instant navigation
+  useEffect(() => {
+    const totalCount = data?.head?.counts?.resultCount || 0;
+    const hasNextPage = (page + 1) * rowsPerPage < totalCount;
+
+    if (hasNextPage && !isLoading) {
+      const nextPageParams = {
+        limit: rowsPerPage,
+        skip: (page + 1) * rowsPerPage,
+      };
+
+      // Prefetch next page in the background (uses global staleTime/gcTime)
+      queryClient.prefetchQuery({
+        queryKey: ['bills', nextPageParams],
+        queryFn: () => fetchBills(nextPageParams),
+      });
+    }
+  }, [page, rowsPerPage, data, isLoading, queryClient]);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -70,13 +92,8 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
     );
   }
 
-  const allBills = data?.results || [];
-  const totalCount = allBills.length;
-  
-  // Client-side pagination
-  const startIndex = page * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const bills = allBills.slice(startIndex, endIndex);
+  const bills = data?.results || [];
+  const totalCount = data?.head?.counts?.resultCount || 0;
 
   // Mobile card view
   if (isMobile) {

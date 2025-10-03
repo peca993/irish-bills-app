@@ -1,22 +1,20 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import toast from 'react-hot-toast';
 import type { FavoriteBill } from '../types/bill';
 import { mockFavoriteBill, mockUnfavoriteBill } from '../services/api';
 
 interface FavoritesState {
   favorites: FavoriteBill[];
-  pendingFavorites: Set<string>;
   addFavorite: (bill: FavoriteBill) => Promise<void>;
   removeFavorite: (billNo: string) => Promise<void>;
   isFavorite: (billNo: string) => boolean;
-  isPending: (billNo: string) => boolean;
 }
 
 export const useFavoritesStore = create<FavoritesState>()(
   persist(
     (set, get) => ({
       favorites: [],
-      pendingFavorites: new Set(),
 
       addFavorite: async (bill: FavoriteBill) => {
         const { billNo } = bill;
@@ -24,23 +22,17 @@ export const useFavoritesStore = create<FavoritesState>()(
         // Optimistic update
         set((state) => ({
           favorites: [...state.favorites, bill],
-          pendingFavorites: new Set([...state.pendingFavorites, billNo]),
         }));
 
         try {
           await mockFavoriteBill(billNo);
+          // Silent success - user already sees the result
         } catch (error) {
-          // Rollback on error
+          // Rollback on error with toast notification
           set((state) => ({
             favorites: state.favorites.filter((f) => f.billNo !== billNo),
           }));
-          throw error;
-        } finally {
-          set((state) => {
-            const newPending = new Set(state.pendingFavorites);
-            newPending.delete(billNo);
-            return { pendingFavorites: newPending };
-          });
+          toast.error(`Failed to add ${billNo} to favorites. Please try again.`);
         }
       },
 
@@ -50,30 +42,20 @@ export const useFavoritesStore = create<FavoritesState>()(
         // Optimistic update
         set((state) => ({
           favorites: state.favorites.filter((f) => f.billNo !== billNo),
-          pendingFavorites: new Set([...state.pendingFavorites, billNo]),
         }));
 
         try {
           await mockUnfavoriteBill(billNo);
+          // Silent success - user already sees the result
         } catch (error) {
-          // Rollback on error
+          // Rollback on error with toast notification
           set({ favorites: previousFavorites });
-          throw error;
-        } finally {
-          set((state) => {
-            const newPending = new Set(state.pendingFavorites);
-            newPending.delete(billNo);
-            return { pendingFavorites: newPending };
-          });
+          toast.error(`Failed to remove ${billNo} from favorites. Please try again.`);
         }
       },
 
       isFavorite: (billNo: string) => {
         return get().favorites.some((f) => f.billNo === billNo);
-      },
-
-      isPending: (billNo: string) => {
-        return get().pendingFavorites.has(billNo);
       },
     }),
     {

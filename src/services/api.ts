@@ -9,7 +9,7 @@ export interface FetchBillsParams {
 }
 
 export const fetchBills = async ({
-  limit = 50, // Fetch more to allow for client-side filtering
+  limit = 20,
   skip = 0,
 }: FetchBillsParams = {}): Promise<BillsResponse> => {
   const params = new URLSearchParams({

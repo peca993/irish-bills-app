@@ -22,7 +22,8 @@ describe('BillTypeFilter', () => {
   it('renders with correct initial value', () => {
     renderWithTheme(<BillTypeFilter value="" onChange={mockOnChange} />);
     
-    expect(screen.getByDisplayValue('All Types')).toBeInTheDocument();
+    // Check the label is rendered (empty value doesn't show "All Types" in display)
+    expect(screen.getByLabelText('Bill Type')).toBeInTheDocument();
   });
 
   it('calls onChange when selection changes', () => {

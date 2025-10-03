@@ -9,13 +9,11 @@ interface UseBillsParams extends FetchBillsParams {
 
 export const useBills = ({ billType, ...apiParams }: UseBillsParams = {}) => {
   const query = useQuery({
-    queryKey: ['bills', apiParams],
+    queryKey: ['bills', apiParams], // Don't include billType in cache key - it's client-side only
     queryFn: () => fetchBills(apiParams),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 
-  // Client-side filtering since API doesn't support bill_type filter
+  // Client-side filtering on current page only (API doesn't support bill_type filter)
   const filteredData = useMemo((): BillsResponse | undefined => {
     if (!query.data) return undefined;
 
@@ -28,12 +26,8 @@ export const useBills = ({ billType, ...apiParams }: UseBillsParams = {}) => {
     return {
       ...query.data,
       results: filteredResults,
-      head: {
-        ...query.data.head,
-        counts: {
-          resultCount: filteredResults.length,
-        },
-      },
+      // Keep original total count for server-side pagination
+      head: query.data.head,
     };
   }, [query.data, billType]);
 

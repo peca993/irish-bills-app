@@ -1,4 +1,4 @@
-import { IconButton, CircularProgress } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import type { Bill } from '../../types/bill';
 import { useFavoritesStore } from '../../stores/favoritesStore';
@@ -10,38 +10,28 @@ interface FavoriteButtonProps {
 }
 
 export const FavoriteButton = ({ bill, size = 'medium' }: FavoriteButtonProps) => {
-  const { addFavorite, removeFavorite, isFavorite, isPending } = useFavoritesStore();
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
   const billNo = bill.bill.billNo;
   const favorite = isFavorite(billNo);
-  const pending = isPending(billNo);
 
-  const handleToggleFavorite = async () => {
-    try {
-      if (favorite) {
-        await removeFavorite(billNo);
-      } else {
-        await addFavorite(transformBillToFavorite(bill));
-      }
-    } catch (error) {
-      console.error('Failed to toggle favorite:', error);
+  const handleToggleFavorite = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    
+    if (favorite) {
+      await removeFavorite(billNo);
+    } else {
+      await addFavorite(transformBillToFavorite(bill));
     }
   };
 
   return (
     <IconButton
       onClick={handleToggleFavorite}
-      disabled={pending}
       size={size}
       color={favorite ? 'error' : 'default'}
       aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
     >
-      {pending ? (
-        <CircularProgress size={size === 'small' ? 16 : 24} />
-      ) : favorite ? (
-        <Favorite />
-      ) : (
-        <FavoriteBorder />
-      )}
+      {favorite ? <Favorite /> : <FavoriteBorder />}
     </IconButton>
   );
 };

@@ -46,7 +46,7 @@ export const BillsPageTemplate = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
       <Typography
         variant={isMobile ? 'h4' : 'h3'}
         component="h1"

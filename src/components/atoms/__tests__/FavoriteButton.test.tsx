@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider, createTheme } from '@mui/material';
@@ -21,6 +22,26 @@ const mockBill: Bill = {
       ],
     },
     uri: 'test-uri',
+  },
+};
+
+const mockBill2: Bill = {
+  bill: {
+    billNo: 'TEST-002',
+    billType: 'Private Bill',
+    status: 'Published',
+    sponsor: {
+      by: {
+        showAs: 'Another Sponsor',
+      },
+    },
+    titles: {
+      title: [
+        { lang: 'en', value: 'Another Test Bill' },
+        { lang: 'ga', value: 'Bille Eile' },
+      ],
+    },
+    uri: 'test-uri-2',
   },
 };
 
@@ -66,13 +87,15 @@ describe('FavoriteButton', () => {
     });
   });
 
-  it('shows loading state during API call', async () => {
-    renderWithProviders(<FavoriteButton bill={mockBill} />);
+  it('toggles immediately with optimistic UI', () => {
+    // Use a different bill to avoid localStorage conflicts
+    renderWithProviders(<FavoriteButton bill={mockBill2} />);
     
-    const button = screen.getByLabelText('Add to favorites');
-    fireEvent.click(button);
+    const addButton = screen.getByLabelText('Add to favorites');
+    fireEvent.click(addButton);
 
-    // Should show loading state briefly
-    expect(button).toBeDisabled();
+    // Should toggle immediately (optimistic UI - no async wait needed)
+    const removeButton = screen.getByLabelText('Remove from favorites');
+    expect(removeButton).toBeInTheDocument();
   });
 });
