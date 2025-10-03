@@ -16,6 +16,7 @@ export const transformBillToFavorite = (bill: Bill): FavoriteBill => {
     sponsor: bill.bill.sponsor?.by?.showAs || 'Unknown',
     englishTitle: getBillTitle(bill, 'en'),
     irishTitle: getBillTitle(bill, 'ga'),
+    billYear: bill.bill.billYear,
   };
 };
 

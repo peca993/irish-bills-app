@@ -35,6 +35,7 @@ export interface BillType {
 export interface FavoriteBill {
   id: string; // Client-side UUID v4
   billNo: string;
+  billYear: string;
   billType: string;
   status: string;
   sponsor: string;

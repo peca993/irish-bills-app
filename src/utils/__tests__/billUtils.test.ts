@@ -54,8 +54,9 @@ describe('billUtils', () => {
       const favorite = transformBillToFavorite(mockBill);
 
       expect(favorite).toEqual({
-        id: 'TEST-001-test-uri',
-        billNo: 'TEST-001',
+        id: '2023-001',
+        billNo: '001',
+        billYear: '2023',
         billType: 'Public Bill',
         status: 'Published',
         sponsor: 'Test Sponsor',

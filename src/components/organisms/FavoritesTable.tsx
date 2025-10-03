@@ -103,7 +103,7 @@ export const FavoritesTable = () => {
                       color="text.secondary"
                       sx={{ fontSize: '0.65rem' }}
                     >
-                      {favorite.id.slice(0, 8)}
+                      {favorite.billYear}
                     </Typography>
                   </Box>
                   <IconButton
@@ -175,7 +175,7 @@ export const FavoritesTable = () => {
                       color="text.secondary"
                       sx={{ fontSize: '0.65rem' }}
                     >
-                      {favorite.id.slice(0, 8)}
+                      {favorite.billYear}
                     </Typography>
                   </Box>
                 </TableCell>

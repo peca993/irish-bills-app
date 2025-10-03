@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
 import {
+  Alert,
+  Box,
+  Card,
+  CardContent,
+  Chip,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Paper,
   TablePagination,
-  Alert,
-  Box,
+  TableRow,
+  Typography,
   useMediaQuery,
   useTheme,
-  Card,
-  CardContent,
-  Typography,
-  Chip,
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import type { Bill } from '../../types/bill';
+import { useEffect, useState } from 'react';
 import { useBills } from '../../hooks/useBills';
 import { fetchBills } from '../../services/api';
-import { LoadingSkeleton } from '../atoms/LoadingSkeleton';
+import type { Bill } from '../../types/bill';
 import { FavoriteButton } from '../atoms/FavoriteButton';
+import { LoadingSkeleton } from '../atoms/LoadingSkeleton';
 import { BillModal } from '../molecules/BillModal';
 
 interface BillsTableProps {
@@ -129,7 +129,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                         color="text.secondary"
                         sx={{ fontSize: '0.65rem' }}
                       >
-                        {bill.id}
+                        {bill.bill.billYear}
                       </Typography>
                     </Box>
                     <FavoriteButton bill={bill} size="small" />
@@ -210,7 +210,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
                         color="text.secondary"
                         sx={{ fontSize: '0.65rem' }}
                       >
-                        {bill.id}
+                        {bill.bill.billYear}
                       </Typography>
                     </Box>
                   </TableCell>
