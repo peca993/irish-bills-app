@@ -3,9 +3,10 @@ import type { Bill } from '../../types/bill';
 import { getBillTitle, getBillTypes, transformBillToFavorite } from '../billUtils';
 
 const mockBill: Bill = {
-  id: 'TEST-001-test-uri',
+  id: '2023-001',
   bill: {
-    billNo: 'TEST-001',
+    billNo: '001',
+    billYear: '2023',
     billType: 'Public Bill',
     status: 'Published',
     sponsor: {

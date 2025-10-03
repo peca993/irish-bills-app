@@ -34,6 +34,7 @@ export const FavoritesTable = () => {
       id: favorite.id,
       bill: {
         billNo: favorite.billNo,
+        billYear: favorite.id.split('-')[0], // Extract year from composite ID
         billType: favorite.billType,
         status: favorite.status,
         sponsor: {

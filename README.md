@@ -86,12 +86,12 @@ This solution demonstrates best React development practices:
 - Added tooltip to explain this architectural decision
 - Server-side pagination maintained for performance
 
-**2. UUID Generation for Bills**
+**2. Composite Key for Bills**
 
-- **Problem**: API returns duplicate `billNo` and `uri` values
-- **Solution**: Generate client-side UUID v4 at API boundary
+- **Problem**: Need consistent, stable IDs for bills across page loads
+- **Solution**: Use composite key from API data: `billYear-billNo` (e.g., "2023-97")
 - Ensures unique keys for React rendering and state management
-- Uses `uuid` library for RFC4122 compliance
+- Maintains consistency in localStorage for favorites persistence
 
 **3. Type Generation**
 
@@ -110,12 +110,13 @@ This solution demonstrates best React development practices:
 
 ### ✅ Code Quality
 
-- **TypeScript**: Full type safety throughout
+- **TypeScript**: Full type safety throughout with strict mode
 - **ESLint**: Code linting with React and TypeScript rules
 - **Prettier**: Automated code formatting for consistency
 - **Unit Tests**: Vitest + Testing Library for components and utils
 - **Error Handling**: ErrorBoundary with user-friendly fallback UI
 - **Accessibility**: WCAG compliant Material UI components
+- **Clean Code**: No console logs, unused imports, or TODO comments in production
 
 ## Architecture
 
@@ -148,7 +149,6 @@ src/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/peca993/irish-bills-app.git
 cd irish-bills-app
 ```
 

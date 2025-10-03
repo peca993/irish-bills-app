@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-import type { Bill, BillsResponse } from '../types/bill';
+import type { BillsResponse, Bill } from '../types/bill';
 
 const BASE_URL = 'https://api.oireachtas.ie/v1';
 
@@ -26,24 +25,20 @@ export const fetchBills = async ({
 
   const data = await response.json();
 
-  // Add unique client-side UUID to each bill at the API boundary
+  // Generate consistent ID from billYear and billNo
   return {
     ...data,
     results: data.results.map((bill: Bill) => ({
       ...bill,
-      id: uuidv4(),
+      id: `${bill.bill.billYear}-${bill.bill.billNo}`,
     })),
   };
 };
 
-export const mockFavoriteBill = async (billNo: string): Promise<void> => {
-  // Mock API call with delay to simulate network request
+export const mockFavoriteBill = async (): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  console.log(`API: Favorited bill ${billNo}`);
 };
 
-export const mockUnfavoriteBill = async (billNo: string): Promise<void> => {
-  // Mock API call with delay to simulate network request
+export const mockUnfavoriteBill = async (): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  console.log(`API: Unfavorited bill ${billNo}`);
 };

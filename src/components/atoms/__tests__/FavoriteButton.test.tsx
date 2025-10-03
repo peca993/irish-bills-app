@@ -6,9 +6,10 @@ import { FavoriteButton } from '../FavoriteButton';
 import type { Bill } from '../../../types/bill';
 
 const mockBill: Bill = {
-  id: 'TEST-001-test-uri',
+  id: '2023-001',
   bill: {
-    billNo: 'TEST-001',
+    billNo: '001',
+    billYear: '2023',
     billType: 'Public Bill',
     status: 'Published',
     sponsor: {
@@ -23,9 +24,10 @@ const mockBill: Bill = {
 };
 
 const mockBill2: Bill = {
-  id: 'TEST-002-test-uri-2',
+  id: '2023-002',
   bill: {
-    billNo: 'TEST-002',
+    billNo: '002',
+    billYear: '2023',
     billType: 'Private Bill',
     status: 'Published',
     sponsor: {

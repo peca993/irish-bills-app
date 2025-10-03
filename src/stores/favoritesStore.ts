@@ -1,5 +1,4 @@
 import toast from 'react-hot-toast';
-import { v4 as uuidv4 } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { mockFavoriteBill, mockUnfavoriteBill } from '../services/api';
@@ -26,7 +25,7 @@ export const useFavoritesStore = create<FavoritesState>()(
         }));
 
         try {
-          await mockFavoriteBill(billNo);
+          await mockFavoriteBill();
         } catch {
           set((state) => ({
             favorites: state.favorites.filter((f) => f.id !== id),
@@ -45,7 +44,7 @@ export const useFavoritesStore = create<FavoritesState>()(
         }));
 
         try {
-          await mockUnfavoriteBill(bill?.billNo || id);
+          await mockUnfavoriteBill();
         } catch {
           set({ favorites: previousFavorites });
           toast.error(`Failed to remove ${bill?.billNo || id} from favorites. Please try again.`);
@@ -59,18 +58,7 @@ export const useFavoritesStore = create<FavoritesState>()(
     {
       name: 'favorites-storage',
       partialize: (state) => ({ favorites: state.favorites }),
-      version: 1,
-      // TODO: Fix types
-      migrate: (persistedState: unknown) => {
-        const state = persistedState as { favorites?: FavoriteBill[] };
-        if (state?.favorites) {
-          state.favorites = state.favorites.map((fav) => ({
-            ...fav,
-            id: fav.id || uuidv4(),
-          }));
-        }
-        return state;
-      },
+      version: 2,
     }
   )
 );

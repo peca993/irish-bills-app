@@ -1,7 +1,8 @@
 export interface Bill {
-  id: string; // Client-side UUID v4 (API can return duplicates)
+  id: string; // Composite key: billYear-billNo
   bill: {
     billNo: string;
+    billYear: string;
     billType: string;
     status: string;
     sponsor?: {
