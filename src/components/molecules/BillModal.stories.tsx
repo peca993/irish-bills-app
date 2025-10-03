@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { BillModal } from './BillModal';
 import type { Bill } from '../../types/bill';
 
 const mockBill: Bill = {
+  id: '12345',
   bill: {
     billNo: 'B001-2024',
     billType: 'Public Bill',
@@ -51,7 +51,7 @@ const meta: Meta<typeof BillModal> = {
     ),
   ],
   args: {
-    onClose: fn(),
+    onClose: () => {},
   },
 };
 

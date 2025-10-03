@@ -29,7 +29,7 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
       id={`bills-tabpanel-${index}`}
       aria-labelledby={`bills-tab-${index}`}
     >
-      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ py: 3, px: { xs: 2, sm: 3, md: 3 } }}>{children}</Box>}
     </div>
   );
 };
@@ -47,7 +47,7 @@ export const BillsPage = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container  sx={{ py: 4, px: { xs: 2, sm: 3, md: 4, lg: 6 } }}>
       <Typography
         variant={isMobile ? 'h4' : 'h3'}
         component="h1"

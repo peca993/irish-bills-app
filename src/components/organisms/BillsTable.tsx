@@ -37,7 +37,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const theme = useTheme();
-  const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('lg')); // Cards for tablet and below
+  const isTabletOrBelow = useMediaQuery(theme.breakpoints.down('md'));
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useBills({
@@ -166,7 +166,7 @@ export const BillsTable = ({ billType }: BillsTableProps) => {
   return (
     <Paper elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
       <TableContainer>
-        <Table sx={{ minWidth: 900 }}>
+        <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow sx={{ bgcolor: 'grey.50' }}>
               <TableCell sx={{ fontWeight: 600, width: '20%' }}>Bill Number</TableCell>

@@ -5,6 +5,7 @@ import { FavoriteButton } from './FavoriteButton';
 import type { Bill } from '../../types/bill';
 
 const mockBill: Bill = {
+  id: '1234',
   bill: {
     billNo: 'B001-2024',
     billType: 'Public Bill',
