@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { BillTypeFilter } from './BillTypeFilter';
 
@@ -32,7 +31,7 @@ const meta: Meta<typeof BillTypeFilter> = {
     },
   },
   args: {
-    onChange: fn(),
+    onChange: () => {},
   },
 };
 

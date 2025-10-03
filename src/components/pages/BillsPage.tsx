@@ -47,7 +47,7 @@ export const BillsPage = () => {
   };
 
   return (
-    <Container  sx={{ py: 4, px: { xs: 2, sm: 3, md: 4, lg: 6 } }}>
+    <Container sx={{ py: 4, px: { xs: 2, sm: 3, md: 4, lg: 6 } }}>
       <Typography
         variant={isMobile ? 'h4' : 'h3'}
         component="h1"
